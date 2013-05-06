@@ -64,6 +64,18 @@ module.exports = function (grunt) {
         });
       }
 
+      if (opts.require) {
+        opts.require.forEach(function(lib) {
+          var files = ~lib.indexOf('*')
+            ? (grunt.file.expand(lib))
+            : [lib];
+
+          files.forEach(function (file) {
+            b.require(file);
+          });
+        });
+      }
+
       var bundle = b.bundle(opts);
       bundle.on('error', function (err) {
         grunt.fail.warn(err);
